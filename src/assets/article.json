@@ -1,0 +1,46 @@
+{
+  "battle": {
+    "rules": [
+      { "id": "nawabari", "name": "ナワバリ" },
+      { "id": "area", "name": "ガチエリア" },
+      { "id": "yagura", "name": "ガチヤグラ" },
+      { "id": "hoko", "name": "ガチホコ" },
+      { "id": "asari", "name": "ガチアサリ" }
+    ],
+    "stages": [
+      { "id": "ama", "name": "海女美術大学" },
+      { "id": "kinme", "name": "キンメダイ美術館" },
+      { "id": "gonzui", "name": "ゴンズイ地区" },
+      { "id": "zatou", "name": "ザトウマーケット" },
+      { "id": "sumesi", "name": "スメーシーワールド" },
+      { "id": "namerou", "name": "ナメロウ金属" },
+      { "id": "tyouzame", "name": "チョウザメ造船" },
+      { "id": "masaba", "name": "マサバ海峡大橋" },
+      { "id": "mategai", "name": "マテガイ放水路" },
+      { "id": "mahimahi", "name": "マヒマヒリゾート＆スパ" },
+      { "id": "yagara", "name": "ヤガラ市場" },
+      { "id": "yunohana", "name": "ユノハナ大渓谷" }
+    ]
+  },
+  "salmon_run": {
+    "stage": [
+      { "id": "aramaki", "name": "アラマキ砦" },
+      { "id": "syeke", "name": "シャケナダム" },
+      { "id": "muni", "name": "ムニ・エール海洋発電所" }
+    ]
+  },
+  "weapon": [
+    { "id": "aaa", "name": "aaa" },
+    { "id": "aaa", "name": "aaa" }
+  ],
+
+  "sub_weapon": [
+    { "id": "aaa", "name": "aaa" },
+    { "id": "aaa", "name": "aaa" }
+  ],
+
+  "special": [
+    { "id": "aaa", "name": "aaa" },
+    { "id": "aaa", "name": "aaa" }
+  ]
+}

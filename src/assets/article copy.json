@@ -1,0 +1,56 @@
+{
+  "battle": {
+    "rules": [
+      { "id": "nawabari", "name": "ナワバリ" },
+      { "id": "area", "name": "ガチエリア" },
+      { "id": "yagura", "name": "ガチヤグラ" },
+      { "id": "hoko", "name": "ガチホコ" },
+      { "id": "asari", "name": "ガチアサリ" }
+    ],
+    "stages": [
+      { "id": "b_basu", "name": "Bバスパーク" },
+      { "id": "azihurai", "name": "アジフライスタジアム" },
+      { "id": "arowana", "name": "アロワナモール" },
+      { "id": "antyobi", "name": "アンチョビットゲームズ" },
+      { "id": "engawa", "name": "エンガワ河川敷" },
+      { "id": "gangaze", "name": "ガンガゼ野外音楽堂" },
+      { "id": "konbu", "name": "コンブトラック" },
+      { "id": "zatou", "name": "ザトウマーケット" },
+      { "id": "syotturu", "name": "ショッツル鉱山" },
+      { "id": "sumesi", "name": "スメーシーワールド" },
+      { "id": "tatiuo", "name": "タチウオパーキング" },
+      { "id": "tyouzame", "name": "チョウザメ造船" },
+      { "id": "debon", "name": "デボン海洋博物館" },
+      { "id": "hakohugu", "name": "ハコフグ倉庫" },
+      { "id": "battera", "name": "バッテラストリート" },
+      { "id": "huzitubo", "name": "フジツボスポーツクラブ" },
+      { "id": "hokke", "name": "ホッケふ頭" },
+      { "id": "otoro", "name": "ホテルニューオートロ" },
+      { "id": "manta", "name": "マンタマリア号" },
+      { "id": "mutugo", "name": "ムツゴ楼" },
+      { "id": "mozuku", "name": "モズク農園" },
+      { "id": "mongara", "name": "モンガラキャンプ場" },
+      { "id": "ama", "name": "海女美術大学" }
+    ]
+  },
+  "salmon_run": {
+    "stage": [
+      { "id": "aaa", "name": "aaa" },
+      { "id": "aaa", "name": "aaa" }
+    ]
+  },
+  "weapon": [
+    { "id": "aaa", "name": "aaa" },
+    { "id": "aaa", "name": "aaa" }
+  ],
+
+  "sub_weapon": [
+    { "id": "aaa", "name": "aaa" },
+    { "id": "aaa", "name": "aaa" }
+  ],
+
+  "special": [
+    { "id": "aaa", "name": "aaa" },
+    { "id": "aaa", "name": "aaa" }
+  ]
+}
