@@ -1,22 +1,39 @@
 <template>
   <UserInfo :rule="$route.params.rule" :stage="$route.params.stage"></UserInfo>
 
-  <div class="edit col-10 col-md-6 mx-auto">
-    <h1>{{ title }}</h1>
+  <div class="edit col-10 col-md-6 mx-auto mb-5">
+    <h1 class="h6">{{ title }}</h1>
     <div>投稿者: {{ $route.params.username }}</div>
 
     <div>{{ errorMessage }}</div>
     <div class="mt-2 mb-5">
       <button @click="end" class="btn btn-secondary">編集終了</button>
     </div>
+
     <form @submit.prevent="save">
-      <textarea
-        class="form-control"
-        cols="30"
-        rows="10"
+      <editor
         v-model="memo"
-      ></textarea>
-      <div class="mt-3 text-end">
+        api-key="3hgrfaoyg1561x79u87b56n3jka8u0kf3c098n2afls30p0l"
+        :init="{
+          height: 500,
+          menubar: true,
+          automatic_uploads: true,
+          images_upload_url: process.env.VUE_APP_API_URL + 'api/image_upload',
+          //image_upload_handler: image_upload_handler,
+          plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount',
+          ],
+          toolbar:
+            'image undo redo | formatselect | bold italic backcolor | \
+           alignleft aligncenter alignright alignjustify | \
+           bullist numlist outdent indent | removeformat | help',
+          images_file_types: 'jpg,svg,webp,png',
+          paste_data_images: true,
+        }"
+      />
+      <div class="text-end mt-3">
         <input type="submit" class="btn btn-primary" />
       </div>
     </form>
@@ -25,34 +42,26 @@
 
 <script>
 import UserInfo from "@/components/UserInfo.vue";
-import article from "@/assets/article.json";
+import Editor from "@tinymce/tinymce-vue";
 
 export default {
-  name: "UserMemo",
-  components: { UserInfo },
+  name: "MemoEditView",
+  components: {
+    UserInfo,
+    editor: Editor,
+  },
   data() {
     return {
       title: "",
       memo: "",
       errorMessage: "",
+      file: {},
     };
   },
   mounted() {
-    this.setTitle();
     this.load();
   },
   methods: {
-    setTitle() {
-      const rules = article.battle.rules;
-      const stages = article.battle.stages;
-
-      const rule = rules.find((rule) => rule.id === this.$route.params.rule);
-      const stage = stages.find(
-        (stage) => stage.id === this.$route.params.stage
-      );
-
-      this.title = `${rule.name}-${stage.name}`;
-    },
     end() {
       const p = this.$route.params;
       this.$router.push({
@@ -83,8 +92,7 @@ export default {
       this.$http
         .get("/api/memo/load", {
           params: {
-            rule: this.$route.params.rule,
-            stage: this.$route.params.stage,
+            memoId: this.$route.params.memoId,
             username: this.$route.params.username,
           },
         })
@@ -92,6 +100,7 @@ export default {
           console.dir("/api/memo/load @ response");
           console.dir(res.data);
           this.memo = res.data.memo;
+          this.title = res.data.memoTitle;
         })
         .catch((error) => {
           console.dir("/api/memo/load @ error");
@@ -103,8 +112,7 @@ export default {
     save() {
       this.$http
         .post("/api/memo/save", {
-          rule: this.$route.params.rule,
-          stage: this.$route.params.stage,
+          memoId: this.$route.params.memoId,
           memo: this.memo,
         })
         .then((res) => {
@@ -118,6 +126,44 @@ export default {
           console.dir(error);
           console.dir(error.response.data.errorMessage);
           this.errorMessage = error.response.data.errorMessage;
+        });
+    },
+    changeFile(e) {
+      this.file = e.target.files[0];
+    },
+    upload() {
+      console.dir("upload");
+      console.dir(this.file);
+      const formData = new FormData();
+      formData.append("file", this.file);
+
+      console.dir(formData);
+      this.$http
+        .post("/api/image_upload", {
+          formData,
+        })
+        .then((res) => {
+          console.dir("/api/imageUpload @ response");
+          console.dir(res);
+        })
+        .catch((error) => {
+          console.dir("/api/imageUpload @ error");
+          console.dir(error);
+        });
+    },
+    image_upload_handler(blobInfo, success) {
+      console.dir("image_upload_handler");
+      this.$http
+        .post("/api/image_upload", {
+          file: blobInfo.blob(),
+        })
+        .then((res) => {
+          console.dir("/api/imageUpload @ response");
+          success(res.data);
+        })
+        .catch((error) => {
+          console.dir("/api/imageUpload @ error");
+          console.dir(error);
         });
     },
   },

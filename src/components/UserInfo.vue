@@ -12,7 +12,9 @@
     </div>
     <div v-else class="row">
       <div class="col-12 text-end">
-        <a href="http://localhost:3000/auth/twitter">twitterでログイン</a>
+        <a :href="process.env.VUE_APP_API_URL + 'auth/twitter'"
+          >twitterでログイン</a
+        >
       </div>
     </div>
   </div>
@@ -31,6 +33,7 @@ export default {
     stage: String,
   },
   mounted() {
+    console.dir(process.env.VUE_APP_API_URL);
     this.fetchUserName();
   },
   methods: {
