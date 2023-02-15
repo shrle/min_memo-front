@@ -18,8 +18,7 @@
           height: 500,
           menubar: true,
           automatic_uploads: true,
-          images_upload_url: process.env.VUE_APP_API_URL + 'api/image_upload',
-          //image_upload_handler: image_upload_handler,
+          //images_upload_url: apiUrl + 'api/image_upload',
           plugins: [
             'advlist autolink lists link image charmap print preview anchor',
             'searchreplace visualblocks code fullscreen',
@@ -52,6 +51,7 @@ export default {
   },
   data() {
     return {
+      apiUrl: process.env.VUE_APP_API_URL,
       title: "",
       memo: "",
       errorMessage: "",
@@ -71,7 +71,6 @@ export default {
           rule: p.rule,
           stage: p.stage,
         },
-        //path: `/u/${this.$userData.name}/${this.pickRule}/${this.pickStage}`,
       });
     },
     escapeHtml(string) {

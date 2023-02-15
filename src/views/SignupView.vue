@@ -1,6 +1,6 @@
 <template>
   <div class="signup col-10 col-md-6 mx-auto">
-    <h1>Signup</h1>
+    <h1>アカウント登録</h1>
 
     <div class="mt-5">ユーザー名を決めてください</div>
     <div>https://memo.shrle.net/あなたのユーザー名/</div>
