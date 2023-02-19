@@ -12,7 +12,7 @@ app.config.globalProperties.$http = axios.create({
     "Content-Type": "application/json",
   },
   responseType: "json",
-  timeout: 3000,
+  timeout: 20000,
 });
 
 app.config.globalProperties.$userData = reactive({
