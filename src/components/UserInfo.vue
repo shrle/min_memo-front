@@ -12,7 +12,7 @@
     </div>
     <div v-else class="row">
       <div class="col-12 text-end">
-        <a :href="apiUrl + 'auth/twitter'">twitterでログイン</a>
+        <a :href="apiUrl + '/auth/twitter'">twitterでログイン</a>
       </div>
     </div>
   </div>
