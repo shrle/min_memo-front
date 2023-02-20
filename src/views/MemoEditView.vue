@@ -1,6 +1,7 @@
 <template>
-  <UserInfo :rule="$route.params.rule" :stage="$route.params.stage"></UserInfo>
+  <UserInfo></UserInfo>
 
+  <PickStage v-if="memoOnload" :rule="ruleId" :stage="stageId"></PickStage>
   <div class="edit col-10 col-md-6 mx-auto mb-5">
     <h1 class="h6">{{ title }}</h1>
     <div>投稿者: {{ $route.params.username }}</div>
@@ -41,20 +42,26 @@
 
 <script>
 import UserInfo from "@/components/UserInfo.vue";
+import PickStage from "@/components/PickStage.vue";
 import Editor from "@tinymce/tinymce-vue";
 
 export default {
   name: "MemoEditView",
   components: {
     UserInfo,
+    PickStage,
     editor: Editor,
   },
   data() {
     return {
       apiUrl: process.env.VUE_APP_API_URL,
+      category: "",
+      ruleId: "",
+      stageId: "",
       title: "",
       memo: "",
       errorMessage: "",
+      memoOnload: false,
       file: {},
     };
   },
@@ -101,12 +108,17 @@ export default {
           console.dir(res.data);
           this.memo = res.data.memo;
           this.title = res.data.memoTitle;
+          this.category = res.data.attribute.category;
+          this.ruleId = res.data.attribute.rule;
+          this.stageId = res.data.attribute.stage;
+          this.memoOnload = true;
         })
         .catch((error) => {
           console.dir("/api/memo/load @ error");
           console.dir(error);
           console.dir(error.response.data.errorMessage);
           this.errorMessage = error.response.data.errorMessage;
+          this.memoOnload = true;
         });
     },
     save() {

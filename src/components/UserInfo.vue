@@ -1,14 +1,14 @@
 <template>
   <div id="userinfo">
     <div v-if="$userData.name" class="row">
-      <div class="col-8 col-md-10"></div>
+      <div class="col-6 col-md-9"></div>
       <div class="col-2 col-md-1 text-truncate">{{ $userData.name }}</div>
-
+      <div class="col-2 col-md-1">
+        <button class="btn btn-secondary" @click="myPage">マイページ</button>
+      </div>
       <form action="/logout" method="post" class="col-2 col-md-1">
         <button class="logout btn btn-secondary" type="submit">logout</button>
       </form>
-
-      <PickStage :rule="rule" :stage="stage"></PickStage>
     </div>
     <div v-else class="row">
       <div class="col-12 text-end">
@@ -19,13 +19,8 @@
 </template>
 
 <script>
-import PickStage from "@/components/PickStage.vue";
-
 export default {
   name: "UserInfo",
-  components: {
-    PickStage,
-  },
   props: {
     rule: String,
     stage: String,
@@ -34,6 +29,14 @@ export default {
     this.fetchUserName();
   },
   methods: {
+    myPage() {
+      this.$router.push({
+        name: "userhome",
+        params: {
+          username: this.$userData.name,
+        },
+      });
+    },
     fetchUserName() {
       this.$http
         .get("/api/", {

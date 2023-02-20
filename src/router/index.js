@@ -38,6 +38,13 @@ const routes = [
     component: () => import("../views/SignupView.vue"),
   },
   {
+    path: "/u/:username",
+    name: "userhome",
+
+    meta: { title: "みんなの覚書 | マイページ" },
+    component: () => import("../views/UserHomeView.vue"),
+  },
+  {
     path: "/u/:username/:memoId",
     name: "memo",
 

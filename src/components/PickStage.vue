@@ -41,6 +41,7 @@ import article from "@/assets/article.json";
 export default {
   name: "PickStage",
   props: {
+    userName: String,
     rule: String,
     stage: String,
   },
@@ -58,10 +59,20 @@ export default {
     };
   },
   computed: {
+    ruleId() {
+      return this.rules.find((e) => e.id == this.pickRule).id;
+    },
+    stageId() {
+      return this.stages.find((e) => e.id == this.pickStage).id;
+    },
+    ruleName() {
+      return this.rules.find((e) => e.id == this.pickRule).name;
+    },
+    stageName() {
+      return this.stages.find((e) => e.id == this.pickStage).name;
+    },
     memoTitle() {
-      const ruleName = this.rules.find((e) => e.id == this.pickRule).name;
-      const stageName = this.stages.find((e) => e.id == this.pickStage).name;
-      return `${ruleName} - ${stageName}`;
+      return `${this.ruleName} - ${this.stageName}`;
     },
   },
   methods: {
@@ -98,7 +109,7 @@ export default {
       this.$router.push({
         name: "memo",
         params: {
-          username: this.$userData.name,
+          username: this.$route.params.username,
           memoId: memoId,
         },
       });
@@ -123,6 +134,11 @@ export default {
           "/api/memo/create",
           {
             memoTitle: title,
+            attribute: {
+              category: "spaltoon3",
+              rule: this.ruleId,
+              stage: this.stageId,
+            },
           },
           {
             withCredentials: true,

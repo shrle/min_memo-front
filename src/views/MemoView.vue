@@ -1,6 +1,7 @@
 <template>
-  <UserInfo :rule="$route.params.rule" :stage="$route.params.stage"></UserInfo>
+  <UserInfo></UserInfo>
 
+  <PickStage v-if="memoOnload" :rule="ruleId" :stage="stageId"></PickStage>
   <div class="memo col-10 col-md-6 mx-auto mb-5">
     <h1 class="h6">{{ title }}</h1>
     <div>投稿者: {{ $route.params.username }}</div>
@@ -14,16 +15,22 @@
 
 <script>
 import UserInfo from "@/components/UserInfo.vue";
+
+import PickStage from "@/components/PickStage.vue";
 //import article from "@/assets/article.json";
 
 export default {
   name: "MemoView",
-  components: { UserInfo },
+  components: { UserInfo, PickStage },
   data() {
     return {
+      category: "",
+      ruleId: "",
+      stageId: "",
       title: "",
       memo: "",
       errorMessage: "",
+      memoOnload: false,
     };
   },
   computed: {},
@@ -52,12 +59,21 @@ export default {
           console.dir(res.data);
           this.memo = res.data.memo;
           this.title = res.data.memoTitle;
+          this.category = res.data.attribute.category;
+          this.ruleId = res.data.attribute.rule;
+          this.stageId = res.data.attribute.stage;
+          this.memoOnload = true;
         })
         .catch((error) => {
           console.dir("/api/memo/load @ error");
           console.dir(error);
-          console.dir(error.response.data.errorMessage);
-          this.errorMessage = error.response.data.errorMessage;
+          console.dir(
+            error.response.data ? error.response.data.errorMessage : ""
+          );
+          this.errorMessage = error.response.data
+            ? error.response.data.errorMessage
+            : "";
+          this.memoOnload = true;
         });
     },
     edit() {
