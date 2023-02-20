@@ -36,7 +36,9 @@ export default {
   methods: {
     fetchUserName() {
       this.$http
-        .get("/api/")
+        .get("/api/", {
+          withCredentials: true,
+        })
         .then(
           function (res) {
             this.$userData.name = res.data.username;

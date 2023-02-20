@@ -75,6 +75,7 @@ export default {
           params: {
             memoTitle: title,
           },
+          withCredentials: true,
         });
 
         memoId = res.data.memoId;
@@ -118,9 +119,15 @@ export default {
     memoCreate() {
       const title = `Splatoon3 - ${this.memoTitle}`;
       this.$http
-        .post("/api/memo/create", {
-          memoTitle: title,
-        })
+        .post(
+          "/api/memo/create",
+          {
+            memoTitle: title,
+          },
+          {
+            withCredentials: true,
+          }
+        )
         .then((res) => {
           console.dir("/api/memo/create @ response");
           console.dir(res.data);

@@ -66,9 +66,15 @@ export default {
   methods: {
     submit() {
       this.$http
-        .post("/api/signup", {
-          username: this.username,
-        })
+        .post(
+          "/api/signup",
+          {
+            username: this.username,
+          },
+          {
+            withCredentials: true,
+          }
+        )
         .then((res) => {
           console.dir("/api/signup @ response");
           console.dir(res.data);

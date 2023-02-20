@@ -94,6 +94,7 @@ export default {
             memoId: this.$route.params.memoId,
             username: this.$route.params.username,
           },
+          withCredentials: true,
         })
         .then((res) => {
           console.dir("/api/memo/load @ response");
@@ -110,10 +111,16 @@ export default {
     },
     save() {
       this.$http
-        .post("/api/memo/save", {
-          memoId: this.$route.params.memoId,
-          memo: this.memo,
-        })
+        .post(
+          "/api/memo/save",
+          {
+            memoId: this.$route.params.memoId,
+            memo: this.memo,
+          },
+          {
+            withCredentials: true,
+          }
+        )
         .then((res) => {
           console.dir("/api/memo/save @ response");
           console.dir(res.data);
@@ -138,9 +145,15 @@ export default {
 
       console.dir(formData);
       this.$http
-        .post("/api/image_upload", {
-          formData,
-        })
+        .post(
+          "/api/image_upload",
+          {
+            formData,
+          },
+          {
+            withCredentials: true,
+          }
+        )
         .then((res) => {
           console.dir("/api/imageUpload @ response");
           console.dir(res);
@@ -153,9 +166,15 @@ export default {
     image_upload_handler(blobInfo, success) {
       console.dir("image_upload_handler");
       this.$http
-        .post("/api/image_upload", {
-          file: blobInfo.blob(),
-        })
+        .post(
+          "/api/image_upload",
+          {
+            file: blobInfo.blob(),
+          },
+          {
+            withCredentials: true,
+          }
+        )
         .then((res) => {
           console.dir("/api/imageUpload @ response");
           success(res.data);

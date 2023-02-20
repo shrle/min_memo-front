@@ -44,6 +44,8 @@ export default {
             memoId: this.$route.params.memoId,
             username: this.$route.params.username,
           },
+
+          withCredentials: true,
         })
         .then((res) => {
           console.dir("/api/memo/load @ response");
