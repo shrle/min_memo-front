@@ -1,12 +1,14 @@
 <template>
   <UserInfo></UserInfo>
 
-  <PickStage v-if="memoOnload" :rule="ruleId" :stage="stageId"></PickStage>
+  <PickStage v-if="memoOnload" :h2="h2Id" :h3="h3Id"></PickStage>
   <div class="edit col-10 col-md-6 mx-auto mb-5">
     <h1 class="h6">{{ title }}</h1>
     <div>投稿者: {{ $route.params.username }}</div>
 
-    <div>{{ errorMessage }}</div>
+    <div v-if="errorMessage" class="alert alert-warning" role="alert">
+      {{ errorMessage }}
+    </div>
     <div class="mt-2 mb-5">
       <button @click="end" class="btn btn-secondary">編集終了</button>
     </div>
@@ -34,7 +36,10 @@
         }"
       />
       <div class="text-end mt-3">
-        <input type="submit" class="btn btn-primary" />
+        <input type="submit" class="btn btn-primary" v-bind:disabled="saving" />
+      </div>
+      <div v-if="saving" class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
       </div>
     </form>
   </div>
@@ -56,12 +61,13 @@ export default {
     return {
       apiUrl: process.env.VUE_APP_API_URL,
       category: "",
-      ruleId: "",
-      stageId: "",
+      h2Id: "",
+      h3Id: "",
       title: "",
       memo: "",
       errorMessage: "",
       memoOnload: false,
+      saving: false,
       file: {},
     };
   },
@@ -75,8 +81,6 @@ export default {
         name: "memo",
         params: {
           username: p.username,
-          rule: p.rule,
-          stage: p.stage,
         },
       });
     },
@@ -109,24 +113,30 @@ export default {
           this.memo = res.data.memo;
           this.title = res.data.memoTitle;
           this.category = res.data.attribute.category;
-          this.ruleId = res.data.attribute.rule;
-          this.stageId = res.data.attribute.stage;
+          this.h2Id = res.data.attribute.h2;
+          this.h3Id = res.data.attribute.h3;
           this.memoOnload = true;
         })
         .catch((error) => {
           console.dir("/api/memo/load @ error");
           console.dir(error);
-          console.dir(error.response.data.errorMessage);
-          this.errorMessage = error.response.data.errorMessage;
+          if (error.response) {
+            console.dir(error.response.data.errorMessage);
+            this.errorMessage = error.response.data.errorMessage;
+          } else {
+            this.errorMessage = "予期せぬエラーが発生しました";
+          }
           this.memoOnload = true;
         });
     },
     save() {
+      this.saving = true;
       this.$http
         .post(
           "/api/memo/save",
           {
             memoId: this.$route.params.memoId,
+            username: this.$route.params.username,
             memo: this.memo,
           },
           {
@@ -137,13 +147,19 @@ export default {
           console.dir("/api/memo/save @ response");
           console.dir(res.data);
 
+          this.saving = false;
           alert("投稿しました");
         })
         .catch((error) => {
           console.dir("/api/memo/save @ error");
           console.dir(error);
-          console.dir(error.response.data.errorMessage);
-          this.errorMessage = error.response.data.errorMessage;
+          if (error.response) {
+            console.dir(error.response.data.errorMessage);
+            this.errorMessage = error.response.data.errorMessage;
+          } else {
+            this.errorMessage = "予期せぬエラーが発生しました";
+          }
+          this.saving = false;
         });
     },
     changeFile(e) {

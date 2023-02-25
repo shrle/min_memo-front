@@ -6,11 +6,11 @@
       <div class="col-2 col-md-1">
         <button class="btn btn-secondary" @click="myPage">マイページ</button>
       </div>
-      <form action="/logout" method="post" class="col-2 col-md-1">
+      <form :action="apiUrl + '/logout'" method="post" class="col-2 col-md-1">
         <button class="logout btn btn-secondary" type="submit">logout</button>
       </form>
     </div>
-    <div v-else class="row">
+    <div v-else-if="onLoadUserName" class="row">
       <div class="col-12 text-end">
         <a :href="apiUrl + '/auth/twitter'">twitterでログイン</a>
       </div>
@@ -42,22 +42,23 @@ export default {
         .get("/api/", {
           withCredentials: true,
         })
-        .then(
-          function (res) {
-            this.$userData.name = res.data.username;
-            console.dir("/api/ @ response");
-            console.dir(res.data);
-          }.bind(this)
-        )
-        .catch(function (error) {
+        .then((res) => {
+          this.$userData.name = res.data.username;
+          console.dir("/api/ @ response");
+          console.dir(res.data);
+          this.onLoadUserName = true;
+        })
+        .catch((error) => {
           console.dir("/api/ @ error");
           console.dir(error);
+          this.onLoadUserName = true;
         });
     },
   },
   data() {
     return {
       username: "",
+      onLoadUserName: false,
       apiUrl: process.env.VUE_APP_API_URL,
     };
   },

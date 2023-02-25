@@ -45,25 +45,9 @@
 export default {
   name: "App",
   components: {},
-  mounted() {
-    this.$http
-      .get("/api/test")
-      .then(
-        function (res) {
-          this.$userData.name = res.data.username;
-          console.dir("/api/test @ response");
-          console.dir(res.data);
-        }.bind(this)
-      )
-      .catch(function (error) {
-        console.dir("/api/test @ error");
-        console.dir(error);
-      });
-  },
+  mounted() {},
   data() {
-    return {
-      todos: [],
-    };
+    return {};
   },
   methods: {},
 };

@@ -3,7 +3,10 @@
     <h1>アカウント登録</h1>
 
     <div class="mt-5">ユーザー名を決めてください</div>
-    <div>https://memo.shrle.net/あなたのユーザー名/</div>
+    <div>https://memo.shrle.net/u/あなたのユーザー名/</div>
+
+    <p>ユーザー名は半角英数字のみで4文字以上14文字以下</p>
+    <p>アカウント登録後にユーザー名の変更はできません</p>
 
     <form @submit.prevent="submit">
       <div class="mt-3 mb-3">
@@ -30,12 +33,15 @@
         <label class="form-check-label" for="tos">利用規約に同意する</label>
       </div>
 
-      <p>
+      <div class="mt-2 mb-2">
         <router-link to="/tos" target="_blank">利用規約</router-link>
+      </div>
+      <div class="mb-4">
         <router-link to="/privacy" target="_blank"
           >プライバシーポリシー</router-link
         >
-      </p>
+      </div>
+
       <input
         type="submit"
         class="btn btn-primary"

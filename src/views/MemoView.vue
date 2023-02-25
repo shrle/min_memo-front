@@ -1,14 +1,21 @@
 <template>
   <UserInfo></UserInfo>
 
-  <PickStage v-if="memoOnload" :rule="ruleId" :stage="stageId"></PickStage>
+  <PickStage v-if="memoOnload" :h2="h2Id" :h3="h3Id"></PickStage>
   <div class="memo col-10 col-md-6 mx-auto mb-5">
     <h1 class="h6">{{ title }}</h1>
     <div>投稿者: {{ $route.params.username }}</div>
     <div v-if="$userData.name === $route.params.username">
       <button class="btn btn-secondary mt-3 mb-5" @click="edit">編集</button>
     </div>
-    <div style="color: red">{{ errorMessage }}</div>
+    <div v-if="errorMessage" class="alert alert-warning" role="alert">
+      {{ errorMessage }}
+    </div>
+
+    <div v-if="!memoOnload" class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+
     <div class="lh-lg" v-html="memo"></div>
   </div>
 </template>
@@ -25,8 +32,8 @@ export default {
   data() {
     return {
       category: "",
-      ruleId: "",
-      stageId: "",
+      h2Id: "",
+      h3Id: "",
       title: "",
       memo: "",
       errorMessage: "",
@@ -60,19 +67,20 @@ export default {
           this.memo = res.data.memo;
           this.title = res.data.memoTitle;
           this.category = res.data.attribute.category;
-          this.ruleId = res.data.attribute.rule;
-          this.stageId = res.data.attribute.stage;
+          this.h2Id = res.data.attribute.h2;
+          this.h3Id = res.data.attribute.h3;
           this.memoOnload = true;
         })
         .catch((error) => {
           console.dir("/api/memo/load @ error");
           console.dir(error);
-          console.dir(
-            error.response.data ? error.response.data.errorMessage : ""
-          );
-          this.errorMessage = error.response.data
-            ? error.response.data.errorMessage
-            : "";
+
+          if (error.response) {
+            console.dir(error.response.data.errorMessage);
+            this.errorMessage = error.response.data.errorMessage;
+          } else {
+            this.errorMessage = "予期せぬエラーが発生しました";
+          }
           this.memoOnload = true;
         });
     },

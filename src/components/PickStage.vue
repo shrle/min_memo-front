@@ -1,26 +1,27 @@
 <template>
   <div class="pick-stage row mb-5">
     <div class="col-4 col-md-2">
-      <select class="form-select" v-model="pickRule" @change="memoExist = true">
-        <option v-for="rule in rules" :value="rule.id" :key="rule.id">
-          {{ rule.name }}
+      <select class="form-select" v-model="pickH2" @change="memoExist = true">
+        <option v-for="h2 in h2List" :value="h2.id" :key="h2.id">
+          {{ h2.name }}
         </option>
       </select>
     </div>
     <div class="col-4 col-md-2">
-      <select
-        class="form-select"
-        v-model="pickStage"
-        @change="memoExist = true"
-      >
-        <option v-for="stage in stages" :value="stage.id" :key="stage.id">
-          {{ stage.name }}
+      <select class="form-select" v-model="pickH3" @change="memoExist = true">
+        <option v-for="h3 in h3List" :value="h3.id" :key="h3.id">
+          {{ h3.name }}
         </option>
       </select>
     </div>
     <div class="col-3 col-md-2">
       <button @click="changeStage" class="btn btn-secondary">移動</button>
     </div>
+
+    <div v-if="pageJumping" class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+
     <div v-if="!memoExist" class="alert alert-primary p-2 mt-2" role="alert">
       「{{ memoTitle }}」 のメモはありません
 
@@ -39,45 +40,51 @@
 import article from "@/assets/article.json";
 
 export default {
-  name: "PickStage",
+  name: "pickH3",
   props: {
-    userName: String,
-    rule: String,
-    stage: String,
+    h2: String,
+    h3: String,
   },
   mounted() {},
   data() {
     return {
-      pickRule: this.rule ? this.rule : "nawabari",
-      pickStage: this.stage ? this.stage : "ama",
+      pickH2: this.h2 ? this.h2 : "nawabari",
+      pickH3: this.h3 ? this.h3 : "ama",
 
-      rules: article.battle.rules,
-      stages: article.battle.stages,
-      articleLinks: {},
+      h2List: article.category.h2,
+      h3List: article.category.h2.find((e) => e.id == this.h2).h3,
+
+      pageJumping: false,
 
       memoExist: true,
     };
   },
+  watch: {
+    pickH2() {
+      this.h3List = article.category.h2.find((e) => e.id == this.pickH2).h3;
+      this.pickH3 = this.h3List[0].id;
+    },
+  },
   computed: {
-    ruleId() {
-      return this.rules.find((e) => e.id == this.pickRule).id;
+    h2Id() {
+      return this.h2List.find((e) => e.id == this.pickH2).id;
     },
-    stageId() {
-      return this.stages.find((e) => e.id == this.pickStage).id;
+    h3Id() {
+      return this.h3List.find((e) => e.id == this.pickH3).id;
     },
-    ruleName() {
-      return this.rules.find((e) => e.id == this.pickRule).name;
+    h2Name() {
+      return this.h2List.find((e) => e.id == this.pickH2).name;
     },
-    stageName() {
-      return this.stages.find((e) => e.id == this.pickStage).name;
+    h3Name() {
+      return this.h3List.find((e) => e.id == this.pickH3).name;
     },
     memoTitle() {
-      return `${this.ruleName} - ${this.stageName}`;
+      return `${this.h2Name} - ${this.h3Name}`;
     },
   },
   methods: {
     async fetchMemoId() {
-      // const title = `splatoon3-${this.pickRule}-${this.pickStage}`;
+      // const title = `splatoon3-${this.pickH2}-${this.pickH3}`;
       const title = `Splatoon3 - ${this.memoTitle}`;
       let memoId = null;
 
@@ -100,9 +107,11 @@ export default {
       return memoId;
     },
     async changeStage() {
+      this.pageJumping = true;
       const memoId = await this.fetchMemoId();
       if (!memoId) {
         this.memoExist = false;
+        this.pageJumping = false;
         return;
       }
 
@@ -113,17 +122,8 @@ export default {
           memoId: memoId,
         },
       });
-      /*
-      this.$router.push({
-        name: "memo",
-        params: {
-          username: this.$userData.name,
-          rule: this.pickRule,
-          stage: this.pickStage,
-        },
-      });
-        */
-      //path: `/u/${this.$userData.name}/${this.pickRule}/${this.pickStage}`,
+
+      this.pageJumping = false;
       return;
     },
 
@@ -133,11 +133,12 @@ export default {
         .post(
           "/api/memo/create",
           {
+            username: this.$route.params.username,
             memoTitle: title,
             attribute: {
               category: "spaltoon3",
-              rule: this.ruleId,
-              stage: this.stageId,
+              h2: this.h2Id,
+              h3: this.h3Id,
             },
           },
           {
