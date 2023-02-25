@@ -45,14 +45,16 @@ export default {
     h2: String,
     h3: String,
   },
-  mounted() {},
+  mounted() {
+    this.h3List = article.category.h2.find((e) => e.id == this.pickH2).h3;
+  },
   data() {
     return {
       pickH2: this.h2 ? this.h2 : "nawabari",
       pickH3: this.h3 ? this.h3 : "ama",
 
       h2List: article.category.h2,
-      h3List: article.category.h2.find((e) => e.id == this.h2).h3,
+      h3List: [],
 
       pageJumping: false,
 
