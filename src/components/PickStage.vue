@@ -29,6 +29,7 @@
         @click.once="memoCreate"
         class="btn btn-secondary ms-2"
         v-if="$userData.name === $route.params.username"
+        v-bind:disabled="pageJumping"
       >
         新規作成
       </button>
@@ -130,6 +131,7 @@ export default {
     },
 
     memoCreate() {
+      this.pageJumping = true;
       const title = `Splatoon3 - ${this.memoTitle}`;
       this.$http
         .post(
@@ -158,12 +160,14 @@ export default {
               memoId: res.data.memoId,
             },
           });
+          this.pageJumping = false;
         })
         .catch((error) => {
           console.dir("/api/memo/create @ error");
           console.dir(error);
           console.dir(error.response.data.errorMessage);
           this.errorMessage = error.response.data.errorMessage;
+          this.pageJumping = false;
         });
     },
   },

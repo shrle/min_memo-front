@@ -1,13 +1,23 @@
 <template>
   <div id="userinfo">
     <div v-if="$userData.name" class="row">
-      <div class="col-6 col-md-9"></div>
-      <div class="col-2 col-md-1 text-truncate">{{ $userData.name }}</div>
-      <div class="col-2 col-md-1">
-        <button class="btn btn-secondary" @click="myPage">マイページ</button>
+      <div class="col-4 col-md-6 col-lg-9"></div>
+      <div class="col-2 col-md-2 col-lg-1 text-truncate">
+        {{ $userData.name }}
       </div>
-      <form :action="apiUrl + '/logout'" method="post" class="col-2 col-md-1">
-        <button class="logout btn btn-secondary" type="submit">logout</button>
+      <div class="col-3 col-md-2 col-lg-1 p-0">
+        <button class="btn btn-secondary btn-sm" @click="myPage">
+          マイページ
+        </button>
+      </div>
+      <form
+        :action="apiUrl + '/logout'"
+        method="post"
+        class="col-3 col-md-2 col-lg-1 p-0"
+      >
+        <button class="logout btn btn-secondary btn-sm" type="submit">
+          ログアウト
+        </button>
       </form>
     </div>
     <div v-else-if="onLoadUserName" class="row">
