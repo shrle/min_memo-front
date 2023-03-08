@@ -1,5 +1,14 @@
 <template>
-  <div id="userinfo">
+  <div id="userinfo" class="mb-3">
+    <div v-if="!onLoadUserName" class="row">
+      <div class="col-4 col-md-6 col-lg-9"></div>
+      <div class="col-8 col-md-6 col-lg-3">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
+
     <div v-if="$userData.name" class="row">
       <div class="col-4 col-md-6 col-lg-9"></div>
       <div class="col-2 col-md-2 col-lg-1 text-truncate">
@@ -35,7 +44,7 @@ export default {
     rule: String,
     stage: String,
   },
-  mounted() {
+  async mounted() {
     this.fetchUserName();
   },
   methods: {

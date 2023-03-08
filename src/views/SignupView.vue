@@ -14,9 +14,9 @@
           type="text"
           minlength="4"
           maxlength="14"
-          pattern="^[0-9a-zA-Z]+$"
-          placeholder="ユーザー名(半角英数字のみ)"
-          title="ユーザー名(半角英数字のみ) 4文字以上14文字以下"
+          pattern="^[0-9a-z]+$"
+          placeholder="ユーザー名(小文字半角英数字のみ)"
+          title="ユーザー名(小文字半角英数字のみ) 4文字以上14文字以下"
           v-model="username"
           class="form-control"
         />

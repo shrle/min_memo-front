@@ -16,7 +16,7 @@
       <span class="visually-hidden">Loading...</span>
     </div>
 
-    <div class="lh-lg" v-html="memo"></div>
+    <div class="lh-lg mb-5" v-html="memo"></div>
   </div>
 </template>
 

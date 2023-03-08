@@ -1,5 +1,5 @@
 <template>
-  <div class="position-relative min-vh-100" style="padding-bottom: 100px">
+  <div class="position-relative min-vh-100" style="padding-bottom: 140px">
     <article class="container">
       <h2 class="h6">
         <router-link to="/" class="text-decoration-none link-dark"

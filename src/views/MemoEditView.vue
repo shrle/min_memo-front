@@ -20,12 +20,12 @@
         :init="{
           height: 500,
           menubar: true,
-          automatic_uploads: true,
-          //images_upload_url: apiUrl + 'api/image_upload',
+          //images_upload_url: apiUrl + '/api/uploadimg',
+          images_upload_handler: this.imageUploadHandler,
           plugins: [
             'advlist autolink lists link image charmap print preview anchor',
             'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount',
+            'insertdatetime media  table paste code help wordcount',
           ],
           toolbar:
             'image undo redo | formatselect | bold italic backcolor | \
@@ -35,6 +35,7 @@
           paste_data_images: true,
         }"
       />
+      <canvas :width="canvasWidth" :height="canvasHeight" id="canvas"></canvas>
       <div class="text-end mt-3">
         <input type="submit" class="btn btn-primary" v-bind:disabled="saving" />
       </div>
@@ -60,6 +61,10 @@ export default {
   data() {
     return {
       apiUrl: process.env.VUE_APP_API_URL,
+      canvasWidth: 1280,
+      canvasHeight: 720,
+      maxImageWidth: 1280,
+      maxImageHeight: 720,
       category: "",
       h2Id: "",
       h3Id: "",
@@ -75,6 +80,125 @@ export default {
     this.load();
   },
   methods: {
+    readFile(file) {
+      return new Promise((resolve, reject) => {
+        let reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.onerror = (e) => reject(e);
+        reader.readAsDataURL(file);
+      });
+    },
+    loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = (e) => {
+          console.dir("画像読み込みエラー");
+          return reject(e);
+        };
+        img.src = src;
+      });
+    },
+    async drawImage(image) {
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      this.resizeCanvas(image);
+      await this.sleep(500);
+      ctx.drawImage(image, 0, 0, this.canvasWidth, this.canvasHeight);
+    },
+    /**
+     * 画像横幅か高さが最大値を超えていた場合に
+     * 画像の縦横比に合わせ画像を描画するためのキャンバスのサイズを変更する
+     * @param {Image} image
+     */
+    resizeCanvas(image) {
+      if (
+        !(
+          image.width > this.maxImageWidth || image.height > this.maxImageHeight
+        )
+      ) {
+        this.canvasWidth = image.width;
+        this.canvasHeight = image.height;
+        return;
+      }
+
+      const widthScale = image.width / this.maxImageWidth;
+      const heightScale = image.height / this.maxImageHeight;
+      const scale = widthScale >= heightScale ? widthScale : heightScale;
+
+      this.canvasWidth = Math.floor(image.width / scale);
+      this.canvasHeight = Math.floor(image.height / scale);
+    },
+    sleep(timeMs) {
+      return new Promise((resolve) => setTimeout(resolve, timeMs));
+    },
+    canvasToBlob(canvas, imageType, quality) {
+      return new Promise((resolve) => {
+        canvas.toBlob(
+          function (blob) {
+            resolve(blob);
+          },
+          imageType,
+          quality
+        );
+      });
+    },
+    async uploadImage(blob) {
+      return new Promise((resolve, reject) => {
+        let formData = new FormData();
+        formData.append("image", blob);
+        formData.append("username", this.$route.params.username);
+
+        const config = {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+          withCredentials: true,
+        };
+
+        this.$http
+          .post("/api/uploadimg", formData, config)
+          .then((res) => {
+            console.dir("/api/uploadimg @ response");
+            console.dir(res);
+            resolve(res.data.location);
+          })
+          .catch((error) => {
+            console.dir("/api/uploadimg @ error");
+            reject(error);
+          });
+      });
+    },
+    imageUploadHandler(blobInfo, progress) {
+      const canvas = document.getElementById("canvas");
+
+      return new Promise((resolve, reject) => {
+        this.readFile(blobInfo.blob())
+
+          .then((src) => this.loadImage(src))
+
+          .then(async (img) => {
+            await this.drawImage(img);
+            return this.canvasToBlob(canvas, "image/webp", 0.5);
+          })
+
+          .then(async (blob) => {
+            console.dir(blob.type);
+            if (blob.type !== "image/webp") {
+              throw new Error("ブラウザが image/webp に対応していません");
+            }
+            const location = await this.uploadImage(blob, progress);
+            progress(location);
+            resolve();
+          })
+
+          .catch((e) => {
+            console.dir(e);
+            reject();
+            return;
+          });
+      });
+    },
     end() {
       const p = this.$route.params;
       this.$router.push({
@@ -84,20 +208,7 @@ export default {
         },
       });
     },
-    escapeHtml(string) {
-      if (typeof string !== "string") {
-        return string;
-      }
-      return string.replace(/['`"<>]/g, (match) => {
-        return {
-          "'": "&#x27;",
-          "`": "&#x60;",
-          '"': "&quot;",
-          "<": "&lt;",
-          ">": "&gt;",
-        }[match];
-      });
-    },
+
     load() {
       this.$http
         .get("/api/memo/load", {
@@ -130,6 +241,8 @@ export default {
         });
     },
     save() {
+      console.dir("save");
+      console.dir(this.memo);
       this.saving = true;
       this.$http
         .post(
@@ -185,27 +298,6 @@ export default {
         .then((res) => {
           console.dir("/api/imageUpload @ response");
           console.dir(res);
-        })
-        .catch((error) => {
-          console.dir("/api/imageUpload @ error");
-          console.dir(error);
-        });
-    },
-    image_upload_handler(blobInfo, success) {
-      console.dir("image_upload_handler");
-      this.$http
-        .post(
-          "/api/image_upload",
-          {
-            file: blobInfo.blob(),
-          },
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => {
-          console.dir("/api/imageUpload @ response");
-          success(res.data);
         })
         .catch((error) => {
           console.dir("/api/imageUpload @ error");
