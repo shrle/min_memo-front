@@ -35,7 +35,12 @@
           paste_data_images: true,
         }"
       />
-      <canvas :width="canvasWidth" :height="canvasHeight" id="canvas"></canvas>
+      <canvas
+        :width="canvasWidth"
+        :height="canvasHeight"
+        id="canvas"
+        hidden
+      ></canvas>
       <div class="text-end mt-3">
         <input type="submit" class="btn btn-primary" v-bind:disabled="saving" />
       </div>
