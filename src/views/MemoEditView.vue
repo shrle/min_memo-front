@@ -1,7 +1,7 @@
 <template>
-  <UserInfo></UserInfo>
+  <UserInfo v-show="false"></UserInfo>
 
-  <PickStage v-if="memoOnload" :h2="h2Id" :h3="h3Id"></PickStage>
+  <PickStage v-if="memoOnload" :h2="h2Id" :h3="h3Id" v-show="false"></PickStage>
   <div class="edit col-10 col-md-6 mx-auto mb-5">
     <h1 class="h6">{{ title }}</h1>
     <div>投稿者: {{ $route.params.username }}</div>
@@ -14,41 +14,46 @@
     </div>
 
     <form @submit.prevent="save">
-      <editor
-        v-model="memo"
-        api-key="3hgrfaoyg1561x79u87b56n3jka8u0kf3c098n2afls30p0l"
-        :init="{
-          height: 500,
-          menubar: true,
-          //images_upload_url: apiUrl + '/api/uploadimg',
-          images_upload_handler: this.imageUploadHandler,
-          plugins: [
-            'advlist autolink lists link image charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media  table paste code help wordcount',
-          ],
-          toolbar:
-            'image undo redo | formatselect | bold italic backcolor | \
-           alignleft aligncenter alignright alignjustify | \
-           bullist numlist outdent indent | removeformat | help',
-          images_file_types: 'jpg,svg,webp,png',
-          paste_data_images: true,
-        }"
-      />
-      <canvas
-        :width="canvasWidth"
-        :height="canvasHeight"
-        id="canvas"
-        hidden
-      ></canvas>
       <div class="text-end mt-3">
         <input type="submit" class="btn btn-primary" v-bind:disabled="saving" />
       </div>
-      <div v-if="saving" class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
     </form>
+    <div v-if="saving" class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <hr />
+    <editor
+      v-model="memo"
+      api-key="3hgrfaoyg1561x79u87b56n3jka8u0kf3c098n2afls30p0l"
+      :inline="true"
+      :init="{
+        height: 500,
+        menubar: true,
+        //images_upload_url: apiUrl + '/api/uploadimg',
+        images_upload_handler: this.imageUploadHandler,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media  table paste code help wordcount',
+        ],
+        toolbar:
+          'image undo redo | formatselect | bold italic backcolor | \
+           alignleft aligncenter alignright alignjustify | \
+           bullist numlist outdent indent | removeformat | help',
+        images_file_types: 'jpg,svg,webp,png',
+        paste_data_images: true,
+      }"
+      placeholder="■ここにメモを追加"
+    />
+    <hr />
   </div>
+
+  <canvas
+    :width="canvasWidth"
+    :height="canvasHeight"
+    id="canvas"
+    hidden
+  ></canvas>
 </template>
 
 <script>
@@ -152,6 +157,7 @@ export default {
       return new Promise((resolve, reject) => {
         let formData = new FormData();
         formData.append("image", blob);
+        formData.append("memoId", this.$route.params.memoId);
         formData.append("username", this.$route.params.username);
 
         const config = {
@@ -282,32 +288,6 @@ export default {
     },
     changeFile(e) {
       this.file = e.target.files[0];
-    },
-    upload() {
-      console.dir("upload");
-      console.dir(this.file);
-      const formData = new FormData();
-      formData.append("file", this.file);
-
-      console.dir(formData);
-      this.$http
-        .post(
-          "/api/image_upload",
-          {
-            formData,
-          },
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => {
-          console.dir("/api/imageUpload @ response");
-          console.dir(res);
-        })
-        .catch((error) => {
-          console.dir("/api/imageUpload @ error");
-          console.dir(error);
-        });
     },
   },
 };

@@ -8,6 +8,7 @@
     "lint": "eslint --ext \".js,.vue\" --ignore-path .gitignore . --fix"
   },
   "dependencies": {
+    "@gtm-support/vue-gtm": "^2.0.0",
     "@tinymce/tinymce-vue": "^4.0.7",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.2",

@@ -975,6 +975,20 @@
     "minimatch" "^3.0.4"
     "strip-json-comments" "^3.1.1"
 
+"@gtm-support/core@^2.0.0":
+  "integrity" "sha512-32hyxR/LIB6EWnUcbbrUzjkAE6PSRtqv/AztEnQ8MuCOQ7+u+yXOssfZqNDSWlQkEBn0Co6f7aHG+vcNZCGiLw=="
+  "resolved" "https://registry.npmjs.org/@gtm-support/core/-/core-2.0.0.tgz"
+  "version" "2.0.0"
+
+"@gtm-support/vue-gtm@^2.0.0":
+  "integrity" "sha512-zcnCMZbjPkTGkQpMkF9U2JcCtK9JiasfoZJCYYJLGKFj0cd7abwNLPMa3/sXB89YqiFniazkP++nIzFU9kZzqw=="
+  "resolved" "https://registry.npmjs.org/@gtm-support/vue-gtm/-/vue-gtm-2.0.0.tgz"
+  "version" "2.0.0"
+  dependencies:
+    "@gtm-support/core" "^2.0.0"
+  optionalDependencies:
+    "vue-router" "^4.1.0"
+
 "@hapi/hoek@^9.0.0":
   "integrity" "sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ=="
   "resolved" "https://registry.npmjs.org/@hapi/hoek/-/hoek-9.3.0.tgz"
@@ -1605,10 +1619,10 @@
   optionalDependencies:
     "prettier" "^1.18.2 || ^2.0.0"
 
-"@vue/devtools-api@^6.0.0":
-  "integrity" "sha512-pF1G4wky+hkifDiZSWn8xfuLOJI1ZXtuambpBEYaf7Xaf6zC/pM29rvAGpd3qaGXnr4BAXU1Pxz/VfvBGwexGA=="
-  "resolved" "https://registry.npmjs.org/@vue/devtools-api/-/devtools-api-6.2.0.tgz"
-  "version" "6.2.0"
+"@vue/devtools-api@^6.4.5":
+  "integrity" "sha512-o9KfBeaBmCKl10usN4crU53fYtC1r7jJwdGKjPT24t348rHxgfpZ0xL3Xm/gLUYnc0oTp8LAmrxOeLyu6tbk2Q=="
+  "resolved" "https://registry.npmjs.org/@vue/devtools-api/-/devtools-api-6.5.0.tgz"
+  "version" "6.5.0"
 
 "@vue/reactivity-transform@3.2.37":
   "integrity" "sha512-IWopkKEb+8qpu/1eMKVeXrK0NLw9HicGviJzhJDEyfxTR9e1WtpnnbYkJWurX6WwoFP0sz10xQg8yL8lgskAZg=="
@@ -6004,12 +6018,12 @@
     "hash-sum" "^2.0.0"
     "loader-utils" "^2.0.0"
 
-"vue-router@^4.0.3":
-  "integrity" "sha512-JcO7cb8QJLBWE+DfxGUL3xUDOae/8nhM1KVdnudadTAORbuxIC/xAydC5Zr/VLHUDQi1ppuTF5/rjBGzgzrJNA=="
-  "resolved" "https://registry.npmjs.org/vue-router/-/vue-router-4.0.16.tgz"
-  "version" "4.0.16"
+"vue-router@^4.0.3", "vue-router@^4.1.0":
+  "integrity" "sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ=="
+  "resolved" "https://registry.npmjs.org/vue-router/-/vue-router-4.1.6.tgz"
+  "version" "4.1.6"
   dependencies:
-    "@vue/devtools-api" "^6.0.0"
+    "@vue/devtools-api" "^6.4.5"
 
 "vue-style-loader@^4.1.0", "vue-style-loader@^4.1.3":
   "integrity" "sha512-sFuh0xfbtpRlKfm39ss/ikqs9AbKCoXZBpHeVZ8Tx650o0k0q/YCM7FRvigtxpACezfq6af+a7JeqVTWvncqDg=="

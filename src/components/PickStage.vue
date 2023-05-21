@@ -163,11 +163,15 @@ export default {
           this.pageJumping = false;
         })
         .catch((error) => {
+          this.pageJumping = false;
           console.dir("/api/memo/create @ error");
           console.dir(error);
-          console.dir(error.response.data.errorMessage);
-          this.errorMessage = error.response.data.errorMessage;
-          this.pageJumping = false;
+          if (error.response) {
+            console.dir(error.response.data.errorMessage);
+            this.errorMessage = error.response.data.errorMessage;
+          } else {
+            this.errorMessage = "予期せぬエラーが発生しました";
+          }
         });
     },
   },
