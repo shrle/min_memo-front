@@ -5,7 +5,7 @@ on:
 
 name: 🚀 Build And Deploy website on push
 jobs:
-  build:
+  build_and_Web-deploy:
     name: 🏭 Build
     runs-on: ubuntu-latest
 
@@ -21,13 +21,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: npm run build --if-present
-
-  web-deploy:
-    name: 🎉 Deploy
-    runs-on: ubuntu-latest
-    steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v3
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
