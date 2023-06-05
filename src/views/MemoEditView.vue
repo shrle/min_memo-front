@@ -168,14 +168,14 @@ export default {
         };
 
         this.$http
-          .post("/api/uploadimg", formData, config)
+          .post("/api/memo/uploadimg", formData, config)
           .then((res) => {
-            console.dir("/api/uploadimg @ response");
+            console.dir("/api/memo/uploadimg @ response");
             console.dir(res);
             resolve(res.data.location);
           })
           .catch((error) => {
-            console.dir("/api/uploadimg @ error");
+            console.dir("/api/memo/uploadimg @ error");
             reject(error);
           });
       });
