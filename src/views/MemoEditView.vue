@@ -156,9 +156,13 @@ export default {
     async uploadImage(blob) {
       return new Promise((resolve, reject) => {
         let formData = new FormData();
-        formData.append("image", blob);
         formData.append("memoId", this.$route.params.memoId);
         formData.append("username", this.$route.params.username);
+        formData.append("image", blob);
+
+        for (let value of formData.entries()) {
+          console.log(value);
+        }
 
         const config = {
           headers: {
@@ -204,7 +208,9 @@ export default {
           })
 
           .catch((e) => {
+            console.log("画像の読み込みに失敗");
             console.dir(e);
+            progress("");
             reject();
             return;
           });
