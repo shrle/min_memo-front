@@ -18,6 +18,20 @@
         <input type="submit" class="btn btn-primary" v-bind:disabled="saving" />
       </div>
     </form>
+
+    <!-- testSave
+    <form @submit.prevent="testSave">
+      <div class="text-end mt-3">
+        <input
+          type="submit"
+          class="btn btn-primary"
+          v-bind:disabled="saving"
+          value="テスト書き込み！！！！！！！！"
+        />
+      </div>
+    </form>
+ -->
+
     <div v-if="saving" class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
@@ -90,6 +104,39 @@ export default {
     this.load();
   },
   methods: {
+    testSave() {
+      console.dir("testSave");
+      this.saving = true;
+      this.$http
+        .post(
+          "/api/memo/testSave",
+          {
+            memoId: this.$route.params.memoId,
+            username: this.$route.params.username,
+          },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          console.dir("/api/memo/save @ response");
+          console.dir(res.data);
+
+          this.saving = false;
+          alert("投稿しました");
+        })
+        .catch((error) => {
+          console.dir("/api/memo/save @ error");
+          console.dir(error);
+          if (error.response) {
+            console.dir(error.response.data.errorMessage);
+            this.errorMessage = error.response.data.errorMessage;
+          } else {
+            this.errorMessage = "予期せぬエラーが発生しました";
+          }
+          this.saving = false;
+        });
+    },
     readFile(file) {
       return new Promise((resolve, reject) => {
         let reader = new FileReader();
@@ -160,10 +207,6 @@ export default {
         formData.append("username", this.$route.params.username);
         formData.append("image", blob);
 
-        for (let value of formData.entries()) {
-          console.log(value);
-        }
-
         const config = {
           headers: {
             "content-type": "multipart/form-data",
@@ -207,9 +250,8 @@ export default {
             resolve();
           })
 
-          .catch((e) => {
-            console.log("画像の読み込みに失敗");
-            console.dir(e);
+          .catch((error) => {
+            this.errorMessage = error.response.data.errorMessage;
             progress("");
             reject();
             return;
