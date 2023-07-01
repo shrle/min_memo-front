@@ -2,7 +2,7 @@
   <UserInfo></UserInfo>
 
   <PickStage v-if="memoOnload" :h2="h2Id" :h3="h3Id"></PickStage>
-  <div class="memo col-10 col-md-6 mx-auto mb-5">
+  <div class="memo col-10 col-md-10 col-xl-6 mx-auto mb-5">
     <h1 class="h6">{{ title }}</h1>
     <div>投稿者: {{ $route.params.username }}</div>
     <div v-if="$userData.name === $route.params.username">
@@ -16,9 +16,15 @@
       <span class="visually-hidden">Loading...</span>
     </div>
 
-    <div class="lh-lg mb-5" v-html="memo"></div>
+    <div id="memo" class="lh-lg mb-5" v-html="memo"></div>
   </div>
 </template>
+
+<style>
+img {
+  max-width: 100%;
+}
+</style>
 
 <script>
 import UserInfo from "@/components/UserInfo.vue";

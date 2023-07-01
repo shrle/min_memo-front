@@ -2,7 +2,7 @@
   <UserInfo v-show="false"></UserInfo>
 
   <PickStage v-if="memoOnload" :h2="h2Id" :h3="h3Id" v-show="false"></PickStage>
-  <div class="edit col-10 col-md-6 mx-auto mb-5">
+  <div class="edit col-10 col-md-10 col-xl-6 mx-auto mb-5">
     <h1 class="h6">{{ title }}</h1>
     <div>投稿者: {{ $route.params.username }}</div>
 
@@ -35,13 +35,16 @@
     <div v-if="saving" class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
-    <hr />
+
+    <hr style="margin-top: 100px" />
     <editor
       v-model="memo"
       api-key="3hgrfaoyg1561x79u87b56n3jka8u0kf3c098n2afls30p0l"
       :inline="true"
       :init="{
         height: 500,
+        content_style: 'div {border:0px  padding: 3px;}',
+
         menubar: true,
         //images_upload_url: apiUrl + '/api/uploadimg',
         images_upload_handler: this.imageUploadHandler,
@@ -69,6 +72,15 @@
     hidden
   ></canvas>
 </template>
+
+<style>
+img {
+  max-width: 100%;
+}
+textarea {
+  border: 1px dashed red;
+}
+</style>
 
 <script>
 import UserInfo from "@/components/UserInfo.vue";

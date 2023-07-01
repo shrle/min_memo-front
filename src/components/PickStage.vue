@@ -94,6 +94,7 @@ export default {
       try {
         const res = await this.$http.get("/api/memo/fetch-memoid", {
           params: {
+            username: this.$route.params.username,
             memoTitle: title,
           },
           withCredentials: true,
