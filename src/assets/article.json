@@ -20,6 +20,31 @@
           { "id": "masaba", "name": "マサバ海峡大橋" },
           { "id": "mategai", "name": "マテガイ放水路" },
           { "id": "mahimahi", "name": "マヒマヒリゾート＆スパ" },
+          { "id": "manta", "name": "マンタマリア号" },
+          { "id": "yagara", "name": "ヤガラ市場" },
+          { "id": "yunohana", "name": "ユノハナ大渓谷" }
+        ]
+      },
+      {
+        "id": "torikara",
+        "name": "トリカラ",
+        "h3": [
+          { "id": "base", "name": "基礎" },
+          { "id": "ama", "name": "海女美術大学" },
+          { "id": "kinme", "name": "キンメダイ美術館" },
+          { "id": "kusaya", "name": "クサヤ温泉" },
+          { "id": "gonzui", "name": "ゴンズイ地区" },
+          { "id": "konbu", "name": "コンブトラック" },
+          { "id": "zatou", "name": "ザトウマーケット" },
+          { "id": "sumesi", "name": "スメーシーワールド" },
+          { "id": "namerou", "name": "ナメロウ金属" },
+          { "id": "tara", "name": "タラポートショッピングパーク" },
+          { "id": "tyouzame", "name": "チョウザメ造船" },
+          { "id": "hirame", "name": "ヒラメが丘団地" },
+          { "id": "masaba", "name": "マサバ海峡大橋" },
+          { "id": "mategai", "name": "マテガイ放水路" },
+          { "id": "mahimahi", "name": "マヒマヒリゾート＆スパ" },
+          { "id": "manta", "name": "マンタマリア号" },
           { "id": "yagara", "name": "ヤガラ市場" },
           { "id": "yunohana", "name": "ユノハナ大渓谷" }
         ]
@@ -43,6 +68,7 @@
           { "id": "masaba", "name": "マサバ海峡大橋" },
           { "id": "mategai", "name": "マテガイ放水路" },
           { "id": "mahimahi", "name": "マヒマヒリゾート＆スパ" },
+          { "id": "manta", "name": "マンタマリア号" },
           { "id": "yagara", "name": "ヤガラ市場" },
           { "id": "yunohana", "name": "ユノハナ大渓谷" }
         ]
@@ -66,6 +92,7 @@
           { "id": "masaba", "name": "マサバ海峡大橋" },
           { "id": "mategai", "name": "マテガイ放水路" },
           { "id": "mahimahi", "name": "マヒマヒリゾート＆スパ" },
+          { "id": "manta", "name": "マンタマリア号" },
           { "id": "yagara", "name": "ヤガラ市場" },
           { "id": "yunohana", "name": "ユノハナ大渓谷" }
         ]
@@ -89,6 +116,7 @@
           { "id": "masaba", "name": "マサバ海峡大橋" },
           { "id": "mategai", "name": "マテガイ放水路" },
           { "id": "mahimahi", "name": "マヒマヒリゾート＆スパ" },
+          { "id": "manta", "name": "マンタマリア号" },
           { "id": "yagara", "name": "ヤガラ市場" },
           { "id": "yunohana", "name": "ユノハナ大渓谷" }
         ]
@@ -112,6 +140,7 @@
           { "id": "masaba", "name": "マサバ海峡大橋" },
           { "id": "mategai", "name": "マテガイ放水路" },
           { "id": "mahimahi", "name": "マヒマヒリゾート＆スパ" },
+          { "id": "manta", "name": "マンタマリア号" },
           { "id": "yagara", "name": "ヤガラ市場" },
           { "id": "yunohana", "name": "ユノハナ大渓谷" }
         ]
