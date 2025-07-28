@@ -1,69 +1,56 @@
 <template>
-  <UserInfo v-show="false"></UserInfo>
+  <main class="edit">
+    <div class="loading-container" v-if="saving"></div>
 
-  <PickStage v-if="memoOnload" :h2="h2Id" :h3="h3Id" v-show="false"></PickStage>
-  <div class="edit col-10 col-md-10 col-xl-6 mx-auto mb-5">
-    <h1 class="h6">{{ title }}</h1>
-    <div>投稿者: {{ $route.params.username }}</div>
-
-    <div v-if="errorMessage" class="alert alert-warning" role="alert">
-      {{ errorMessage }}
-    </div>
-    <div class="mt-2 mb-5">
-      <button @click="end" class="btn btn-secondary">編集終了</button>
-    </div>
-
-    <form @submit.prevent="save">
-      <div class="text-end mt-3">
-        <input type="submit" class="btn btn-primary" v-bind:disabled="saving" />
+    <article>
+      <h1>{{ title }}</h1>
+      <div>投稿者: {{ $route.params.username }}</div>
+      <div class="">
+        <button @click="end" class="text-button">編集終了</button>
       </div>
-    </form>
-
-    <!-- testSave
-    <form @submit.prevent="testSave">
-      <div class="text-end mt-3">
-        <input
-          type="submit"
-          class="btn btn-primary"
-          v-bind:disabled="saving"
-          value="テスト書き込み！！！！！！！！"
-        />
+      <div v-if="errorMessage" class="warn">
+        {{ errorMessage }}
       </div>
-    </form>
- -->
 
-    <div v-if="saving" class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-
-    <hr style="margin-top: 100px" />
-    <editor
-      v-model="memo"
-      api-key="3hgrfaoyg1561x79u87b56n3jka8u0kf3c098n2afls30p0l"
-      :inline="true"
-      :init="{
-        height: 500,
-        content_style: 'div {border:0px  padding: 3px;}',
-
-        menubar: true,
-        //images_upload_url: apiUrl + '/api/uploadimg',
-        images_upload_handler: this.imageUploadHandler,
-        plugins: [
-          'advlist autolink lists link image charmap print preview anchor',
-          'searchreplace visualblocks code fullscreen',
-          'insertdatetime media  table paste code help wordcount',
-        ],
-        toolbar:
-          'image undo redo | formatselect | bold italic backcolor | \
+      <section class="memo-view">
+        <editor
+          v-model="memo"
+          api-key="3hgrfaoyg1561x79u87b56n3jka8u0kf3c098n2afls30p0l"
+          :inline="false"
+          :init="{
+            content_style: '{border:5px solid #000000;  padding: 3px;}',
+            height: 800,
+            menubar: true,
+            //images_upload_url: apiUrl + '/api/uploadimg',
+            images_upload_handler: this.imageUploadHandler,
+            plugins: [
+              'advlist autolink lists link image charmap print preview anchor',
+              'searchreplace visualblocks code fullscreen',
+              'insertdatetime media  table paste code help wordcount',
+            ],
+            toolbar:
+              'image undo redo | formatselect | bold italic backcolor | \
            alignleft aligncenter alignright alignjustify | \
            bullist numlist outdent indent | removeformat | help',
-        images_file_types: 'jpg,svg,webp,png',
-        paste_data_images: true,
-      }"
-      placeholder="■ここにメモを追加"
-    />
-    <hr />
-  </div>
+            images_file_types: 'jpg,svg,webp,png',
+            paste_data_images: true,
+          }"
+          placeholder="■ここにメモを追加"
+          class="editor"
+        />
+      </section>
+
+      <form @submit.prevent="save" class="save-form">
+        <button
+          type="submit"
+          class="text-button primary"
+          v-bind:disabled="saving"
+        >
+          保存
+        </button>
+      </form>
+    </article>
+  </main>
 
   <canvas
     :width="canvasWidth"
@@ -73,25 +60,59 @@
   ></canvas>
 </template>
 
-<style>
+<style scoped>
+.edit {
+  background-color: #eaf5ff;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+h1 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
 img {
   max-width: 100%;
 }
-textarea {
-  border: 1px dashed red;
+
+article {
+  max-width: 800px;
+  width: 100%;
+  min-height: 100vh;
+  margin-top: 20px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.memo-view {
+  margin-top: 10px;
+  width: 100%;
+  min-height: 80vh;
+  background-color: #fff;
+  border: 1px solid #aaaaaa;
+}
+.editor {
+  height: 100%;
+}
+
+.save-form {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
 }
 </style>
 
 <script>
-import UserInfo from "@/components/UserInfo.vue";
-import PickStage from "@/components/PickStage.vue";
+// import Header from "@/components/HeaderComponent.vue";
+
 import Editor from "@tinymce/tinymce-vue";
 
 export default {
   name: "MemoEditView",
   components: {
-    UserInfo,
-    PickStage,
+    // Header,
     editor: Editor,
   },
   data() {
@@ -116,39 +137,6 @@ export default {
     this.load();
   },
   methods: {
-    testSave() {
-      console.dir("testSave");
-      this.saving = true;
-      this.$http
-        .post(
-          "/api/memo/testSave",
-          {
-            memoId: this.$route.params.memoId,
-            username: this.$route.params.username,
-          },
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => {
-          console.dir("/api/memo/save @ response");
-          console.dir(res.data);
-
-          this.saving = false;
-          alert("投稿しました");
-        })
-        .catch((error) => {
-          console.dir("/api/memo/save @ error");
-          console.dir(error);
-          if (error.response) {
-            console.dir(error.response.data.errorMessage);
-            this.errorMessage = error.response.data.errorMessage;
-          } else {
-            this.errorMessage = "予期せぬエラーが発生しました";
-          }
-          this.saving = false;
-        });
-    },
     readFile(file) {
       return new Promise((resolve, reject) => {
         let reader = new FileReader();
@@ -215,10 +203,17 @@ export default {
     async uploadImage(blob) {
       return new Promise((resolve, reject) => {
         let formData = new FormData();
+        formData.append("csrfToken", this.$userData.csrfToken);
         formData.append("memoId", this.$route.params.memoId);
         formData.append("username", this.$route.params.username);
         formData.append("image", blob);
 
+        // const data = {
+        //   csrfToken: this.$userData.csrfToken,
+        //   memoId:this.$route.params.memoId,
+        //   username: this.$route.params.username,
+        //   image: blob,
+        // }
         const config = {
           headers: {
             "content-type": "multipart/form-data",
@@ -235,6 +230,7 @@ export default {
           })
           .catch((error) => {
             console.dir("/api/memo/uploadimg @ error");
+
             reject(error);
           });
       });
@@ -298,6 +294,7 @@ export default {
           this.h2Id = res.data.attribute.h2;
           this.h3Id = res.data.attribute.h3;
           this.memoOnload = true;
+          // Editor.focus();
         })
         .catch((error) => {
           console.dir("/api/memo/load @ error");
@@ -319,6 +316,7 @@ export default {
         .post(
           "/api/memo/save",
           {
+            csrfToken: this.$userData.csrfToken,
             memoId: this.$route.params.memoId,
             username: this.$route.params.username,
             memo: this.memo,

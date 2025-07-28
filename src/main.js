@@ -3,7 +3,6 @@ import { createGtm } from "@gtm-support/vue-gtm";
 import App from "./App.vue";
 import router from "./router";
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const app = createApp(App);
 
@@ -12,7 +11,8 @@ app.config.globalProperties.$http = axios.create({
 });
 
 app.config.globalProperties.$userData = reactive({
-  name: "",
+  name: null,
+  csrfToken: "",
 });
 
 app.use(router).mount("#app");

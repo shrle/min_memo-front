@@ -1,15 +1,15 @@
 <template>
-  <div class="signup col-10 col-md-6 mx-auto">
+  <Header></Header>
+
+  <main class="signup main-container">
     <h1>アカウント登録</h1>
 
-    <div class="mt-5">ユーザー名を決めてください</div>
-    <div>https://memo.shrle.net/u/あなたのユーザー名/</div>
-
+    <p>ユーザー名を決めてください</p>
     <p>ユーザー名は半角英数字のみで4文字以上14文字以下</p>
     <p>アカウント登録後にユーザー名の変更はできません</p>
-
     <form @submit.prevent="submit">
-      <div class="mt-3 mb-3">
+      <p class="username-container">
+        <label for="username" class="username">ユーザー名</label>
         <input
           type="text"
           minlength="4"
@@ -18,11 +18,257 @@
           placeholder="ユーザー名(小文字半角英数字のみ)"
           title="ユーザー名(小文字半角英数字のみ) 4文字以上14文字以下"
           v-model="username"
-          class="form-control"
+          class="simple username"
+          id="username"
         />
+      </p>
+
+      <p>
+        <router-link to="/privacy" target="_blank"
+          >プライバシーポリシー</router-link
+        >
+      </p>
+
+      <div class="tos-container">
+        <h1>利用規約</h1>
+
+        <p>
+          この利用規約は、みんなの覚書（以下、「本アプリ」といいます。）の利用条件を定めるものです。本アプリをご利用になるお客様（以下、「ユーザー」といいます。）は、本規約に同意の上、本アプリをご利用ください。
+        </p>
+
+        <hr />
+
+        <h2>第1条（本規約への同意）</h2>
+        <ol>
+          <li>
+            ユーザーは、本アプリの利用を開始することにより、本規約の全ての記載内容に同意したものとみなされます。
+          </li>
+          <li>
+            本規約に同意できない場合、ユーザーは本アプリを利用することはできません。
+          </li>
+          <li>
+            本アプリは、未成年者の利用を想定しておりません。未成年者が本アプリを利用する場合、親権者その他の法定代理人の同意を得るものとします。
+          </li>
+        </ol>
+
+        <hr />
+
+        <h2>第2条（本アプリの目的と機能）</h2>
+        <ol>
+          <li>
+            本アプリは、ユーザーが文章や画像をリッチテキスト形式で作成・編集し、保存することを目的としたメモアプリです。
+          </li>
+          <li>
+            ユーザーは、本アプリを通じて作成したメモを閲覧、編集、削除することができます。
+          </li>
+          <li>
+            <strong
+              >本アプリでは、Twitterアカウントでログインすることでメモをサーバーに保存できます。</strong
+            >
+            ログインしない場合は、メモはユーザーの利用するデバイスの<strong
+              >ローカルストレージにのみ保存されます。</strong
+            >
+          </li>
+        </ol>
+
+        <hr />
+
+        <h2>第3条（アカウント登録と管理）</h2>
+        <ol>
+          <li>
+            <strong
+              >本アプリでメモをサーバーに保存するためには、Twitterアカウントによるログインが必要です。</strong
+            >
+          </li>
+          <li>
+            ユーザーは、Twitterアカウントの利用規約およびプライバシーポリシーを遵守するものとします。
+          </li>
+          <li>
+            ユーザーは、自身のTwitterアカウント情報および本アプリのログイン状態を厳重に管理し、第三者に利用させてはなりません。
+          </li>
+          <li>
+            Twitterアカウントの管理不十分、使用上の過誤、第三者の使用等による損害の責任はユーザーが負うものとし、本アプリ運営者（以下、「運営者」といいます。）は一切の責任を負いません。
+          </li>
+          <li>
+            <strong>
+              ログインしない場合のローカルストレージに保存されたメモは、デバイスを変更・初期化したり、ブラウザのキャッシュをクリアしたりした場合に消失する可能性があります。
+              運営者は、ローカルストレージに保存されたメモの消失について一切の責任を負いません。
+            </strong>
+          </li>
+        </ol>
+
+        <hr />
+
+        <h2>第4条（ユーザーの責任）</h2>
+        <ol>
+          <li>
+            ユーザーは、本アプリの利用に関連して、法令または本規約に違反する行為を行ってはなりません。
+          </li>
+          <li>
+            ユーザーは、自身が投稿する文章や画像等のコンテンツについて、一切の責任を負うものとします。
+          </li>
+          <li>
+            ユーザーは、本アプリの利用に関連して、他のユーザーまたは第三者との間で紛争が生じた場合、自己の費用と責任においてこれを解決するものとします。
+          </li>
+        </ol>
+
+        <hr />
+
+        <h2>第5条（禁止事項）</h2>
+        <p>
+          ユーザーは、本アプリの利用にあたり、以下の行為を行ってはなりません。
+        </p>
+        <ol>
+          <li>
+            <strong>法令または公序良俗に違反する行為</strong
+            >、またはそのおそれのある行為。
+          </li>
+          <li>
+            <strong
+              >第三者の知的財産権（著作権、特許権、商標権等）その他の権利を侵害する行為。</strong
+            >
+          </li>
+          <li>
+            <strong>第三者の個人情報やプライバシーを侵害する行為</strong
+            >、またはそのおそれのある行為。
+            <ul>
+              <li>
+                他者の氏名、住所、電話番号、メールアドレス、顔写真など、個人を特定できる情報の投稿を含みます。
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong
+              >誹謗中傷、差別、わいせつ、グロテスク、暴力的な表現を含む投稿</strong
+            >、または他者に不快感を与える投稿。
+          </li>
+          <li><strong>運営者または第三者になりすます行為。</strong></li>
+          <li>
+            <strong>本アプリの運営を妨害する行為</strong
+            >、またはそのおそれのある行為。
+            <ul>
+              <li>
+                システムへの過度な負荷をかける行為、不正アクセス、マルウェアの送信などを含みます。
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>本アプリのバグや不具合を意図的に利用する行為。</strong>
+          </li>
+          <li>
+            <strong>商業目的での利用行為</strong
+            >（運営者が別途認めた場合を除く）。
+          </li>
+          <li>その他、運営者が不適切と判断する行為。</li>
+        </ol>
+
+        <hr />
+
+        <h2>第6条（投稿コンテンツの権利）</h2>
+        <ol>
+          <li>
+            ユーザーが本アプリに投稿した文章や画像等のコンテンツの著作権は、原則として当該ユーザーに帰属します。
+          </li>
+          <li>
+            運営者は、本アプリの管理・運営、および本規約に定める目的のために、ユーザーの投稿コンテンツを閲覧、複製、加工、保存することができるものとします。
+          </li>
+          <li>
+            ユーザーは、運営者が本条に定める目的で投稿コンテンツを利用することに対し、著作者人格権を行使しないものとします。
+          </li>
+        </ol>
+
+        <hr />
+
+        <h2>第7条（個人情報の取り扱い）</h2>
+        <p>
+          運営者は、ユーザーから取得した個人情報（Twitterアカウント連携により取得する情報を含む）を、別途定める「プライバシーポリシー」に従い、適切に取り扱います。ユーザーは、本アプリの利用に際し、プライバシーポリシーに同意するものとします。
+        </p>
+
+        <hr />
+
+        <h2>第8条（サービスの停止・変更・終了）</h2>
+        <ol>
+          <li>
+            運営者は、以下のいずれかの事由が生じた場合、ユーザーに事前に通知することなく、本アプリの全部または一部の提供を停止または中断できるものとします。
+            <ul>
+              <li>
+                本アプリのシステムメンテナンス、システム障害が発生した場合。
+              </li>
+              <li>
+                地震、落雷、火災、風水害、停電、天災地変などの不可抗力により、本アプリの運営ができなくなった場合。
+              </li>
+              <li>その他、運営者が必要と判断した場合。</li>
+            </ul>
+          </li>
+          <li>
+            運営者は、ユーザーに事前に通知することなく、本アプリの内容を変更または終了することができるものとします。
+          </li>
+          <li>
+            運営者は、本条に基づく本アプリの停止、変更、終了によってユーザーに生じた損害について、一切の責任を負いません。
+          </li>
+        </ol>
+
+        <hr />
+
+        <h2>第9条（免責事項）</h2>
+        <ol>
+          <li>
+            運営者は、本アプリに事実上または法律上の瑕疵（安全性、信頼性、正確性、完全性、有効性、特定の目的への適合性、セキュリティなどに関する欠陥、エラーやバグ、権利侵害などを含みます。）がないことを明示的にも黙示的にも保証しておりません。
+          </li>
+          <li>
+            運営者は、本アプリの利用によりユーザーに生じたあらゆる損害について、一切の責任を負いません。ただし、本アプリに関する運営者とユーザーとの間の契約（本規約を含みます。）が消費者契約法に定める消費者契約に該当する場合、この免責規定は適用されません。この場合であっても、運営者は、運営者の過失（重過失を除く）による債務不履行または不法行為によりユーザーに生じた損害のうち、特別な事情から生じた損害（運営者またはユーザーが損害発生につき予見し、または予見し得た場合を含みます。）について一切の責任を負いません。
+          </li>
+          <li>
+            運営者は、本アプリに関してユーザーと他のユーザーまたは第三者との間において生じた取引、連絡または紛争等について、一切の責任を負いません。
+          </li>
+          <li>
+            <strong
+              >Twitterアカウントの仕様変更、障害、または凍結などにより本アプリのログイン機能が利用できなくなった場合、運営者は一切の責任を負いません。</strong
+            >
+          </li>
+        </ol>
+
+        <hr />
+
+        <h2>第10条（規約の変更）</h2>
+        <ol>
+          <li>
+            運営者は、必要と判断した場合、ユーザーに事前に通知することなく、いつでも本規約を変更できるものとします。
+          </li>
+          <li>
+            変更後の本規約は、本アプリのウェブサイト上に表示した時点より効力を生じるものとします。
+          </li>
+          <li>
+            ユーザーが本規約の変更後に本アプリを利用した場合、変更後の本規約に同意したものとみなします。
+          </li>
+        </ol>
+
+        <hr />
+
+        <h2>第11条（通知または連絡）</h2>
+        <p>
+          運営者からユーザーへの通知または連絡は、運営者の定める方法（本アプリ内での掲示、登録メールアドレスへの送信等）によって行われるものとします。
+        </p>
+
+        <hr />
+
+        <h2>第12条（準拠法および管轄裁判所）</h2>
+        <ol>
+          <li>本規約の解釈にあたっては、日本法を準拠法とします。</li>
+          <li>
+            本アプリに関して紛争が生じた場合には、運営者の本店所在地を管轄する裁判所を第一審の専属的合意管轄裁判所とします。
+          </li>
+        </ol>
+
+        <hr class="footer" />
+
+        <div class="footer">
+          <p>附則</p>
+          <p>2025年7月25日 制定</p>
+        </div>
       </div>
 
-      <div class="">
+      <p>
         <input
           type="checkbox"
           class="form-check-input"
@@ -31,36 +277,29 @@
           v-model="tosChecked"
         />
         <label class="form-check-label" for="tos">利用規約に同意する</label>
-      </div>
+      </p>
 
-      <div class="mt-2 mb-2">
-        <router-link to="/tos" target="_blank">利用規約</router-link>
-      </div>
-      <div class="mb-4">
-        <router-link to="/privacy" target="_blank"
-          >プライバシーポリシー</router-link
-        >
-      </div>
-
-      <input
+      <button
         type="submit"
-        class="btn btn-primary"
-        value="ユーザー登録"
+        class="text-button primary"
         v-bind:disabled="!tosChecked"
-      />
+      >
+        登録
+      </button>
     </form>
-    <div class="alert alert-warning mt-3" v-if="errorMessage">
+    <p class="warn" v-if="errorMessage">
       {{ errorMessage }}
-    </div>
-  </div>
+    </p>
+  </main>
 </template>
 
 <script>
 // @ is an alias to /src
+import Header from "@/components/HeaderComponent.vue";
 
 export default {
   name: "SignupView",
-  components: {},
+  components: { Header },
   props: {},
   data() {
     return {
@@ -75,6 +314,7 @@ export default {
         .post(
           "/api/signup",
           {
+            csrfToken: this.$userData.csrfToken,
             username: this.username,
           },
           {
@@ -97,3 +337,96 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.username-container {
+  position: relative;
+}
+
+input.username {
+  width: 500px;
+  padding-left: 20px;
+}
+label.username {
+  position: absolute;
+  top: -20px;
+  left: 10px;
+  padding: 5px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #888888;
+}
+
+.warn {
+  margin-top: 30px;
+}
+
+.tos-container {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  padding: 20px;
+  background-color: #f9f9f9;
+
+  width: 100%;
+  height: 300px;
+  border: #aaaaaa 1px solid;
+  overflow-y: scroll;
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+  }
+  h2 {
+    font-size: 1.5em;
+    color: #34495e;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+  }
+  h3 {
+    font-size: 1.2em;
+    color: #34495e;
+    margin-top: 25px;
+    margin-bottom: 10px;
+  }
+  p {
+    margin-bottom: 10px;
+  }
+  ol,
+  ul {
+    margin-left: 25px;
+    margin-bottom: 10px;
+  }
+  li {
+    margin-bottom: 5px;
+  }
+  strong {
+    color: #2980b9;
+  }
+  .note {
+    background-color: #eaf2f8;
+    border-left: 5px solid #3498db;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 4px;
+  }
+  .footer {
+    text-align: right;
+    margin-top: 40px;
+    font-size: 0.9em;
+    color: #777;
+    border-top: 1px dashed #ccc;
+    padding-top: 10px;
+  }
+  .privacy-link {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px dashed #ccc;
+  }
+}
+</style>

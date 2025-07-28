@@ -1,6 +1,7 @@
 <template>
-  <div class="about col-10 col-md-6 mx-auto">
-    <h1 class="mb-5">みんなの覚書について</h1>
+  <Header></Header>
+  <main class="about main-container">
+    <h1 class="">みんなの覚書について</h1>
     <p>みんなの覚書は特定のカテゴリの覚書に特化したサイトです</p>
 
     <p>投稿した内容はすべてのユーザーが閲覧することができます</p>
@@ -20,5 +21,15 @@
       しゅるる - <a href="https://twitter.com/puyoquerensim">twitter</a><br />
       お問い合わせ - shrle2424@gmail.com
     </address>
-  </div>
+  </main>
 </template>
+
+<script>
+// @ is an alias to /src
+
+import Header from "@/components/HeaderComponent.vue";
+export default {
+  name: "AboutView",
+  components: { Header },
+};
+</script>

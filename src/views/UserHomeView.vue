@@ -1,9 +1,18 @@
 <template>
-  <UserInfo></UserInfo>
+  <Header></Header>
+  <div class="userhome main-container">
+    <form
+      :action="apiUrl + '/logout'"
+      method="post"
+      class="col-3 col-md-2 col-lg-1 p-0"
+    >
+      <input type="text" name="csrfToken" :value="$userData.csrfToken" hidden />
 
-  <PickStage></PickStage>
-  <div class="userhome col-10 col-md-6 mx-auto">
-    <h1>みんなの覚書 - スプラトゥーン3</h1>
+      <button class="logout btn btn-secondary btn-sm" type="submit">
+        ログアウト
+      </button>
+    </form>
+
     <button
       class="btn btn-secondary btn-sm mt-5"
       @click="deactivateAboutView = true"
@@ -44,14 +53,13 @@
 
 <script>
 // @ is an alias to /src
-import UserInfo from "@/components/UserInfo.vue";
-import PickStage from "@/components/PickStage.vue";
+
+import Header from "@/components/HeaderComponent.vue";
 
 export default {
   name: "UserHomeView",
   components: {
-    UserInfo,
-    PickStage,
+    Header,
   },
   data() {
     return {

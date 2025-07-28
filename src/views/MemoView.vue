@@ -1,45 +1,59 @@
 <template>
-  <UserInfo></UserInfo>
+  <Header ref="Header"></Header>
 
-  <PickStage v-if="memoOnload" :h2="h2Id" :h3="h3Id"></PickStage>
-  <div class="memo col-10 col-md-10 col-xl-6 mx-auto mb-5">
-    <h1 class="h6">{{ title }}</h1>
+  <main class="memo main-container">
+    <div class="loading-container" v-if="!memoOnload"></div>
+
+    <h1 class="">{{ title }}</h1>
+
     <div>投稿者: {{ $route.params.username }}</div>
+
     <div v-if="$userData.name === $route.params.username">
-      <button class="btn btn-secondary mt-3 mb-5" @click="edit">編集</button>
+      <button class="text-button" @click="edit">編集</button>
     </div>
-    <div v-if="errorMessage" class="alert alert-warning" role="alert">
+
+    <div v-if="errorMessage" class="warn">
       {{ errorMessage }}
     </div>
 
-    <div v-if="!memoOnload" class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-
-    <div id="memo" class="lh-lg mb-5" v-html="memo"></div>
-  </div>
+    <div id="memo" class="memo-view" v-html="memo"></div>
+  </main>
 </template>
 
 <style>
+article {
+  max-width: 800px;
+  width: 100%;
+  margin-top: 20px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.memo-view {
+  min-height: 80vh;
+  width: 100%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 20px;
+}
 img {
   max-width: 100%;
 }
 </style>
 
 <script>
-import UserInfo from "@/components/UserInfo.vue";
+import Header from "@/components/HeaderComponent.vue";
 
-import PickStage from "@/components/PickStage.vue";
 //import article from "@/assets/article.json";
 
 export default {
   name: "MemoView",
-  components: { UserInfo, PickStage },
+  components: { Header },
   data() {
     return {
       category: "",
-      h2Id: "",
-      h3Id: "",
+      h1Id: null,
+      h2Id: null,
+      h3Id: null,
       title: "",
       memo: "",
       errorMessage: "",
@@ -73,9 +87,12 @@ export default {
           this.memo = res.data.memo;
           this.title = res.data.memoTitle;
           this.category = res.data.attribute.category;
-          this.h2Id = res.data.attribute.h2;
-          this.h3Id = res.data.attribute.h3;
+          const h1Id = res.data.attribute.h1;
+          const h2Id = res.data.attribute.h2;
+          const h3Id = res.data.attribute.h3;
           this.memoOnload = true;
+
+          this.$refs.Header.setStage(h1Id, h2Id, h3Id);
         })
         .catch((error) => {
           console.dir("/api/memo/load @ error");
