@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <main class="privacy main-container">
+  <main class="privacy page-container">
     <h1>プライバシーポリシー</h1>
 
     <p>

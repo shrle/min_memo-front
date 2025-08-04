@@ -4,10 +4,28 @@
 
     <article>
       <h1>{{ memoTitle }}</h1>
-      <div class="">
-        <button @click="end" class="text-button">編集終了</button>
+
+      <div class="buttons-container">
+        <div class="">
+          <button @click="end" class="text-button">編集終了</button>
+        </div>
+
+        <form @submit.prevent="save" class="save-form">
+          <button
+            type="submit"
+            class="text-button primary"
+            v-bind:disabled="saving"
+          >
+            保存
+          </button>
+        </form>
       </div>
-      <div v-if="errorMessage" class="warn">
+
+      <div
+        class="warn"
+        :class="{ 'show-warn': errorMessage }"
+        @click="errorMessage = ''"
+      >
         {{ errorMessage }}
       </div>
 
@@ -34,21 +52,11 @@
           class="editor"
         />
       </section>
-
-      <form @submit.prevent="save" class="save-form">
-        <button
-          type="submit"
-          class="text-button primary"
-          v-bind:disabled="saving"
-        >
-          保存
-        </button>
-      </form>
     </article>
   </main>
 </template>
 
-<style>
+<style lang="scss" scoped>
 .edit {
   background-color: #eaf5ff;
   padding-top: 20px;
@@ -99,6 +107,25 @@ article {
   display: flex;
   justify-content: right;
   align-items: center;
+}
+
+.buttons-container {
+  width: 100%;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  > :first-child {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+  }
+
+  > :last-child {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+  }
 }
 </style>
 

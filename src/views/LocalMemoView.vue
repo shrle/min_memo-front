@@ -1,20 +1,27 @@
 <template>
   <Header ref="Header"></Header>
-  <main class="memo main-container">
-    <h1 class="h6">{{ memoTitle }}</h1>
-    <div class="local-mode">ローカルモード</div>
-    <p>
-      <button class="text-button" @click="edit">編集</button>
-    </p>
-    <p v-if="errorMessage" class="warn">
-      {{ errorMessage }}
-    </p>
+  <main class="memo">
+    <div class="page-container">
+      <h1 class="h6">{{ memoTitle }}</h1>
+      <div class="local-mode">ローカルモード</div>
+      <p>
+        <button class="text-button" @click="edit">編集</button>
+      </p>
+    </div>
 
-    <div id="memo" v-html="memo"></div>
+    <div id="memo" v-html="memo" class="memo-view"></div>
   </main>
+
+  <div
+    class="warn"
+    :class="{ 'show-warn': errorMessage }"
+    @click="errorMessage = ''"
+  >
+    {{ errorMessage }}
+  </div>
 </template>
 
-<style>
+<style lang="scss" scoped>
 img {
   max-width: 100%;
 }

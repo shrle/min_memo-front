@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <main class="notfound main-container">ページが見つかりません</main>
+  <main class="notfound page-container">ページが見つかりません</main>
 </template>
 
 <script>

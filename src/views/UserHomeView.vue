@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <div class="userhome main-container">
+  <div class="userhome page-container">
     <form
       :action="apiUrl + '/logout'"
       method="post"

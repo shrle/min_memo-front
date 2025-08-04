@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <main class="tos main-container">
+  <main class="tos page-container">
     <h1>利用規約</h1>
 
     <p>

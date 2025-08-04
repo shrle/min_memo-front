@@ -2,56 +2,60 @@
   <main class="edit">
     <div class="loading-container" v-if="saving"></div>
 
-    <article>
+    <div class="page-container">
       <h1>{{ title }}</h1>
-      <div>投稿者: {{ $route.params.username }}</div>
-      <div class="">
-        <button @click="end" class="text-button">編集終了</button>
-      </div>
-      <div v-if="errorMessage" class="warn">
-        {{ errorMessage }}
-      </div>
 
-      <section class="memo-view">
-        <editor
-          v-model="memo"
-          api-key="3hgrfaoyg1561x79u87b56n3jka8u0kf3c098n2afls30p0l"
-          :inline="false"
-          :init="{
-            content_style: '{border:5px solid #000000;  padding: 3px;}',
-            height: 800,
-            menubar: true,
-            //images_upload_url: apiUrl + '/api/uploadimg',
-            images_upload_handler: this.imageUploadHandler,
-            plugins: [
-              'advlist autolink lists link image charmap print preview anchor',
-              'searchreplace visualblocks code fullscreen',
-              'insertdatetime media  table paste code help wordcount',
-            ],
-            toolbar:
-              'image undo redo | formatselect | bold italic backcolor | \
+      <div class="buttons-container">
+        <div class="">
+          <button @click="end" class="text-button">編集終了</button>
+        </div>
+
+        <form @submit.prevent="save" class="save-form">
+          <button
+            type="submit"
+            class="text-button primary"
+            v-bind:disabled="saving"
+          >
+            保存
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <section class="memo-view">
+      <editor
+        v-model="memo"
+        api-key="3hgrfaoyg1561x79u87b56n3jka8u0kf3c098n2afls30p0l"
+        :inline="false"
+        :init="{
+          height: 800,
+          menubar: true,
+          //images_upload_url: apiUrl + '/api/uploadimg',
+          images_upload_handler: this.imageUploadHandler,
+          plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media  table paste code help wordcount',
+          ],
+          toolbar:
+            'image undo redo | formatselect | bold italic backcolor | \
            alignleft aligncenter alignright alignjustify | \
            bullist numlist outdent indent | removeformat | help',
-            images_file_types: 'jpg,svg,webp,png',
-            paste_data_images: true,
-          }"
-          placeholder="■ここにメモを追加"
-          class="editor"
-        />
-      </section>
-
-      <form @submit.prevent="save" class="save-form">
-        <button
-          type="submit"
-          class="text-button primary"
-          v-bind:disabled="saving"
-        >
-          保存
-        </button>
-      </form>
-    </article>
+          images_file_types: 'jpg,svg,webp,png',
+          paste_data_images: true,
+        }"
+        placeholder="■ここにメモを追加"
+        class="editor"
+      />
+    </section>
   </main>
-
+  <div
+    class="warn"
+    :class="{ 'show-warn': errorMessage }"
+    @click="errorMessage = ''"
+  >
+    {{ errorMessage }}
+  </div>
   <canvas
     :width="canvasWidth"
     :height="canvasHeight"
@@ -60,7 +64,7 @@
   ></canvas>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .edit {
   background-color: #eaf5ff;
   padding-top: 20px;
@@ -86,11 +90,11 @@ article {
 }
 .memo-view {
   margin-top: 10px;
-  width: 100%;
   min-height: 80vh;
   background-color: #fff;
-  border: 1px solid #aaaaaa;
+  border: 1px solid #aaa;
 }
+
 .editor {
   height: 100%;
 }
@@ -101,6 +105,25 @@ article {
   display: flex;
   justify-content: right;
   align-items: center;
+}
+
+.buttons-container {
+  width: 100%;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  > :first-child {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+  }
+
+  > :last-child {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+  }
 }
 </style>
 

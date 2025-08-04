@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <main class="about main-container">
+  <main class="about page-container">
     <h1 class="">みんなの覚書について</h1>
     <p>みんなの覚書は特定のカテゴリの覚書に特化したサイトです</p>
 

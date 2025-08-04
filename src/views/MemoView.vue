@@ -1,26 +1,29 @@
 <template>
   <Header ref="Header"></Header>
 
-  <main class="memo main-container">
-    <div class="loading-container" v-if="!memoOnload"></div>
+  <main class="memo">
+    <div class="page-container">
+      <div class="loading-container" v-if="!memoOnload"></div>
+      <h1 class="">{{ title }}</h1>
 
-    <h1 class="">{{ title }}</h1>
+      <div>投稿者: {{ $route.params.username }}</div>
 
-    <div>投稿者: {{ $route.params.username }}</div>
-
-    <div v-if="$userData.name === $route.params.username">
-      <button class="text-button" @click="edit">編集</button>
+      <div v-if="$userData.name === $route.params.username">
+        <button class="text-button" @click="edit">編集</button>
+      </div>
     </div>
-
-    <div v-if="errorMessage" class="warn">
-      {{ errorMessage }}
-    </div>
-
     <div id="memo" class="memo-view" v-html="memo"></div>
   </main>
+  <div
+    class="warn"
+    :class="{ 'show-warn': errorMessage }"
+    @click="errorMessage = ''"
+  >
+    {{ errorMessage }}
+  </div>
 </template>
 
-<style>
+<style lang="scss" scoped>
 article {
   max-width: 800px;
   width: 100%;
@@ -28,13 +31,7 @@ article {
   margin-right: auto;
   margin-left: auto;
 }
-.memo-view {
-  min-height: 80vh;
-  width: 100%;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  padding: 20px;
-}
+
 img {
   max-width: 100%;
 }

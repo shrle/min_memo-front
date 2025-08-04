@@ -1,7 +1,7 @@
 <template>
   <Header></Header>
 
-  <main class="signup main-container">
+  <main class="signup page-container">
     <h1>アカウント登録</h1>
 
     <p>ユーザー名を決めてください</p>
@@ -287,9 +287,13 @@
         登録
       </button>
     </form>
-    <p class="warn" v-if="errorMessage">
+    <div
+      class="warn"
+      :class="{ 'show-warn': errorMessage }"
+      @click="errorMessage = ''"
+    >
       {{ errorMessage }}
-    </p>
+    </div>
   </main>
 </template>
 

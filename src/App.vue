@@ -31,7 +31,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 * {
   margin: 0px;
@@ -97,6 +97,7 @@ button.text-button {
   color: #000000;
   min-width: 100px;
   width: fit-content;
+  font-size: 1em;
   font-weight: bolder;
 
   display: flex;
@@ -178,6 +179,21 @@ p {
   color: #333333;
   background-color: #ffff76;
   border-radius: 15px;
+  opacity: 0;
+
+  position: fixed;
+  top: 100px;
+  left: 50vw;
+  z-index: 9999;
+
+  transform: translateY(-50px) translateX(-50%);
+
+  transition: all 0.25s ease-in-out;
+}
+
+.warn.show-warn {
+  transform: translateY(0) translateX(-50%);
+  opacity: 1;
 }
 
 .loading-container {
@@ -213,7 +229,7 @@ p {
 }
 
 /*  (751px - 1299px ) */
-.main-container {
+.page-container {
   width: 600px;
 
   margin: 0 auto;
@@ -221,22 +237,43 @@ p {
 
 /* Style for desktop PCs (1301px - max) */
 @media screen and (min-width: 1301px) {
-  .main-container {
+  .page-container {
     width: 800px;
   }
 }
 
 /* Style for tablet PCs (401px - 750px) */
 @media screen and (max-width: 750px) {
-  .main-container {
-    width: 380px;
+  .page-container {
+    width: 450px;
   }
 }
 
 /* Style for mobile (0 - 400px) */
-@media screen and (max-width: 400px) {
-  .main-container {
+@media screen and (max-width: 450px) {
+  .page-container {
     width: 95vw;
+  }
+}
+
+.memo-view {
+  min-height: 80vh;
+  width: 600px;
+  margin: 50px auto;
+
+  /* Style for desktop PCs (1301px - max) */
+  @media screen and (min-width: 1301px) {
+    width: 800px;
+  }
+
+  /* Style for tablet PCs (401px - 750px) */
+  @media screen and (max-width: 750px) {
+    width: 450px;
+  }
+
+  /* Style for mobile (0 - 400px) */
+  @media screen and (max-width: 450px) {
+    width: 100%;
   }
 }
 

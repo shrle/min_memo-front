@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <div class="account-remove main-container">
+  <div class="account-remove page-container">
     <div class="">
       <h3>アカウントの削除について</h3>
       <p>アカウントを削除するとあなたの投稿した記事と画像が全て削除されます</p>

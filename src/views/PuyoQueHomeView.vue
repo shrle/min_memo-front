@@ -1,6 +1,6 @@
 <template>
   <Header></Header>
-  <main class="home main-container">
+  <main class="home page-container">
     <h1>みんなの覚書へようこそ！</h1>
     <p>みんなの覚書はカテゴリ特化型のメモ帳です。</p>
     <p>現在はぷよクエにも対応しています。</p>
