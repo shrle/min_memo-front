@@ -266,6 +266,16 @@ p {
   width: 600px;
   margin: 50px auto;
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 5px;
+    margin-bottom: 20px;
+  }
+
   /* Style for desktop PCs (1301px - max) */
   @media screen and (min-width: 1301px) {
     width: 800px;
