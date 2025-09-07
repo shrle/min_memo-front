@@ -41,6 +41,11 @@ export default {
   font-family: "Roboto", sans-serif;
 }
 
+ul,
+ol {
+  margin-left: 20px;
+}
+
 h1 {
   font-size: 28px;
   margin-bottom: 50px;
@@ -273,7 +278,7 @@ p {
 
   /* Style for mobile (0 - 400px) */
   @media screen and (max-width: 450px) {
-    width: 100%;
+    width: 90%;
   }
 }
 
